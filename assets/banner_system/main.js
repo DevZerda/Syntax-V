@@ -9,6 +9,7 @@ const Config = require("../Config/main.js");
 
 exports.ModifyBanner = function(file_name) {
     let db = fs.readFileSync(`./assets/banner_system/banner_files/${file_name}.txt`, "utf8");
+
     let nef = db.split("{RED}").join(Config.Colors.Red);
     nef = nef.split("{YELLOW}").join(Config.Colors.Yellow);
     nef = nef.split("{BLUE}").join(Config.Colors.Blue);
