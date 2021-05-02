@@ -5,8 +5,10 @@ const fs = require("fs");
 
 // Extra
 
-exports.addAPI = function() {
-
+exports.addAPI = function(api, methods) {
+    /*
+    * For method parameters it must be a string with commaas 'UDP,TCP'
+    */
 }
 
 exports.removeAPI = function() {
