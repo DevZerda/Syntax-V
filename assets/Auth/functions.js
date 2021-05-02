@@ -1,7 +1,7 @@
 // Files
 const Crud = require("./crud.js");
 
-exports.isPremium = function(user) {
+exports.isPremium = async function(user) {
     accInfo = await Crud.GetUser(user, "arr");
     switch(parseInt(accInfo[3])) {
         case 0:
@@ -28,5 +28,5 @@ exports.resetIP = function(user) {
 }
 
 exports.changePW = function() {
-
+    
 }
