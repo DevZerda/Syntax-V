@@ -4,6 +4,8 @@ const Login = require("./assets/Auth/main.js");
 
 const Extra = require("./assets/Extra/main.js");
 
+const roots = require("./assets/root_system/main.js");
+
 let lul = process.argv;
 
 // console.log(Auth.addUser(lul[2], lul[3], lul[4], lul[5], lul[6]))
@@ -24,4 +26,6 @@ let lul = process.argv;
 
 // niggered();
 
-Extra.pScan(lul[2]);
+// Extra.pScan(lul[2]);
+
+roots.SendCommand(cmd);
