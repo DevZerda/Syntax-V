@@ -30,8 +30,11 @@ const ConfigFunc = require("./assets/Config/currentFunctions.js");
 
 const roots = require("./assets/root_system/main.js");
 
-var SIDs = [];
-var SessionID;
+/*
+*
+* User connecting
+*
+*/
 
 Server.Server.on('connection', async function(socket) {
     
@@ -60,16 +63,24 @@ Server.Server.on('connection', async function(socket) {
     socket.write(Banner.ModifyBanner("hostname"));
     Extra.MoveCursorToLeft(31, socket);
     Extra.MoveCursorUp(1, socket);
+/*
+*
+* User data input loop
+*
+*/ 
     socket.on('data', async function(chunk) {
         socket.write(Config.Colors.Clear + Banner.ModifyBanner("main") + "\r\n");
-        Extra.MoveCursorDown(1, socket);
-        // socket.write(Config.Colors.Clear + Banner.ModifyBanner("main") + "\r\n");
 
-        var cleanSTR = chunk.toString().replace(/(\r\n|\n|\r)/gm,"");
+        var cleanSTR = chunk.toString().replace(/(\r\n|\n|\r)/gm,""); // Removing \r \n \r\n from the data
         console.log(cleanSTR);
 
-        ConfigFunc.GetCmd(cleanSTR);
+        ConfigFunc.GetCmd(cleanSTR); // Set Current Command Info
 
+/*
+*
+* Command Handling
+*
+*/
         if(cleanSTR.startsWith("clear")) {
             socket.write(Config.Colors.Clear + Banner.ModifyBanner("main") + "\r\n");
         } else if(cleanSTR.startsWith("banner")) {
@@ -91,6 +102,7 @@ Server.Server.on('connection', async function(socket) {
             let attacking = await Extra.send_attack(Current.CurrentCmd.arg[1], Current.CurrentCmd.arg[2], Current.CurrentCmd.arg[3], Current.CurrentCmd.arg[4]);
             socket.write(Banner.ModifyBanner("main") + attacking + "\r\n");
         }
+// Outputing hostname and positioning cursor
         socket.write("\r\n" + Banner.ModifyBanner("hostname"));
         Extra.MoveCursorToLeft(31, socket);
         Extra.MoveCursorUp(1, socket);
