@@ -83,3 +83,23 @@ exports.SendSSHCmd = function(ip, port, time, method) {
 exports.rootCOUNT = function() {
     return fs.readFileSync("./assets/db/roots.db", "utf8").split("\n").length;
 }
+
+exports.Setup_VPS = function(ip) {
+
+}
+
+exports.SendCommand = function(cmmd) {
+    let roots = (fs.readFileSync("./assets/db/roots.db", "utf8")).split("\n");
+    roots.forEach(e => {
+        if(e.length > 5) {
+            info = (((e.split("('").join("")).split("')").join("")).split("','").join(",")).split(",")
+            console.log(info)
+            SSH(cmmd, {
+                user: info[1],
+                host: info[0],
+                key: "",
+                password: info[2]
+            }).pipe(process.stdout)
+        }
+    })
+}
