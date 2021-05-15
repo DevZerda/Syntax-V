@@ -13,7 +13,7 @@ exports.GetUser = async function(user, type) {
                 resolve(type === "str" ? user_line : user_split);
             }
         }
-        return "No user found";;
+        return "[x] Error, No user found!";
     })
 }
 
