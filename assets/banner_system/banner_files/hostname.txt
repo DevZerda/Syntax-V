@@ -1,4 +1,4 @@
-                    {BG_GREY}{RED}╔════════════════════════════════════╗{RESET}
-                    {BG_GREY}{RED}║ {YELLOW}╔════════╣{RED}Syntax{YELLOW}@{RED}NET{YELLOW}╠══╣{RED}~{YELLOW}║{RED}         ║{RESET}
-                    {BG_GREY}{RED}║ {YELLOW}╚══►{RED}                               ║{RESET}
-                    {BG_GREY}{RED}╚════════════════════════════════════╝{RESET}
+                    {RED}╔════════════════════════════════════╗{RESET}
+                    {RED}║ {YELLOW}╔════════╣{RED}Syntax{YELLOW}@{RED}NET{YELLOW}╠══╣{RED}~{YELLOW}║{RED}         ║{RESET}
+                    {RED}║ {YELLOW}╚══►{RED}                               ║{RESET}
+                    {RED}╚════════════════════════════════════╝{RESET}
