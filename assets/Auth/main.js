@@ -3,16 +3,6 @@
 // Files
 const Crud = require("./crud");
 
-// exports.Login = async function(user, pw, ip) {
-//     let acctInfo = await Crud.GetUser(user, "arr");
-//     console.log(acctInfo);
-//     if(acctInfo === "[x] Error, No user found!") return acctInfo;
-//     // if(acctInfo[1] === "none") Extra.changeIP(user);
-//     let response = ((acctInfo[0] === user && acctInfo[2] === pw) ? "[x] Successfully logged in. Welcome: " + user + "\r\n" : "[x] Error, Failed");
-//     // if(Crud.GetCurrentUser(ip, "str")) return "[x] Error, This user is already signed in. One connection per user!\r\n";
-    
-//     return response;
-// }
 
 exports.login = async function(user, pass, ip) {
     if(user === "undefined" || pass === "undefined" || ip === "undefined") return "[x] Error, Invalud argument value!";
@@ -23,13 +13,13 @@ exports.login = async function(user, pass, ip) {
 
     let info = get_user;
 
-
+    //Debugging / Ignore
     console.log("Username Input: " + user);
     console.log("Password Input: " + pass);
     console.log("Current IP: " + ip);
     console.log("Closest matching Username Fetched from DB: " + get_user[0]);
     console.log("Closest matching Password Fetched from DB: " + get_user[2]);
-    console.log("IP Fetched from DB: " + get_user[1]);
+    console.log("IP Fetched from DB: " + get_user[1] + "\r\n\r\n");
 
 
     let depend = ((user === get_user[0] && pass === get_user[2]) ? "[+] Successfully logged in, Welcome: " + user : "[x] Error, Username or password seem to be incorrect!. Try again");
