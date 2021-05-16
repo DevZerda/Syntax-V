@@ -13,18 +13,6 @@ const Config = require("../Config/main.js");
 exports.sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
-
-exports.GeoIP = async function(ip) {
-    let geoResult = JSON.parse(await(await fetch(`http://ip-api.com/json/${ip}`)).text());
-    let result = "";
-    return new Promise(resolve => {
-        Object.keys(geoResult).forEach(key => {
-            result += ("                    " + Config.Colors.Red + (key[0].toUpperCase() + key.slice(1)) + Config.Colors.Yellow + ": " + geoResult[key] + "\r\n");
-        })
-        resolve(result);
-    })
-}
-
 exports.pScan = async function(ip) {
     let getPorts = await(await fetch(`https://api.hackertarget.com/nmap/?q=${ip}`)).text();
     let results = "";
