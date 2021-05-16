@@ -13,31 +13,6 @@ const Config = require("../Config/main.js");
 exports.sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
-exports.pScan = async function(ip) {
-    let getPorts = await(await fetch(`https://api.hackertarget.com/nmap/?q=${ip}`)).text();
-    let results = "";
-    getPorts.split("\n").forEach(e => {
-        if(e.includes("open")) {
-            results += "                    " + ((((e.split(" ").join(",")).split(",,,").join(" ")).split(",,").join(",")).split(",").join(" ").split(" ") + "\r\n");
-        } else if(e.includes("closed")) {
-            results += "                    " + ((((e.split(" ").join(",")).split(",,,").join(" ")).split(",,").join(",")).split(",").join(" ").split(" ") + "\r\n");
-        } else if(e.includes("filter")) {
-            results += "                    " + ((((e.split(" ").join(",")).split(",,,").join(" ")).split(",,").join(",")).split(",").join(" ").split(" ") + "\r\n");
-        }
-    })
-    return this.ColorPortScan(results)
-}
-
-exports.ColorPortScan = function(r) {    
-    lines = r.split("\n");
-    let results = "";
-    lines.forEach(e => {
-        if(e.length < 4) return;
-        let shit = e.split(",");
-        results += Config.Colors.Red + shit[0] + " " + Config.Colors.Yellow + shit[1] + " " + Config.Colors.Red + shit[2] + "\n";
-    })
-    return results;
-}
 
 /*
 *
